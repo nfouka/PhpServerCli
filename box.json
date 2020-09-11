@@ -1,0 +1,13 @@
+
+
+{
+  "alias": "server.phar",
+  "chmod": "0755",
+   "main": "bin/compile.php",
+  "directories": [
+    "vendor","src"
+  ],
+  "files": [],
+  "output": "cliServer.phar",
+  "stub": true
+}
