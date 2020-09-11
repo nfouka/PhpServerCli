@@ -90,7 +90,7 @@ class Server extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
  
-        $outputStyle = new OutputFormatterStyle('red', 'yellow' );
+        $outputStyle = new OutputFormatterStyle('black', 'green' );
         $output->getFormatter()->setStyle('fire', $outputStyle);
         
         $this->io = $output ; 
