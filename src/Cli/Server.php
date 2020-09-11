@@ -22,6 +22,8 @@ use Symfony\Component\Console\Output\ConsoleOutputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Process;
+use Closure;
+use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 
 /**
  * Runs a local web server in a background process.
@@ -31,6 +33,17 @@ use Symfony\Component\Process\Process;
 class Server extends Command
 {
 
+    
+    protected static $defaultName = 'server:start';
+    public $addressport ; 
+    public $io  ; 
+    
+    public function __construct(string $addressport = null  )
+    {
+        $this->addressport = $addressport; 
+        parent::__construct();
+    }
+    
 
     /**
      * {@inheritdoc}
@@ -39,7 +52,6 @@ class Server extends Command
     {
         
         $this
-        ->setName('server:start')
         ->setDescription('Example command requiring an argument to be passed')
         
         
@@ -70,6 +82,7 @@ class Server extends Command
             
          ; 
     }
+    
 
     /**
      * {@inheritdoc}
@@ -77,23 +90,24 @@ class Server extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
  
+        $outputStyle = new OutputFormatterStyle('red', 'yellow' );
+        $output->getFormatter()->setStyle('fire', $outputStyle);
+        
+        $this->io = $output ; 
+        $this->addressport  = $input->getOption('addressport')   ; 
         $io = new SymfonyStyle($input, $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
        
         $process = new Process([$input->getOption('path') ,"-S", $input->getOption('addressport') ,"--docroot=".$input->getOption('rootdir') ]);
         $process->setTimeout(3600);   
         $io->success("Server run on : ".$input->getOption('addressport') ) ; 
-        $process->run( function ($type, $buffer ) {
-
-            if (Process::ERR === $type) {
-                
-                echo "TYPE PROCESS: \033[01;31m".$type.".".$buffer."\033[0m";
-            } else {
-                echo 'OUT > '.$buffer;
-            }
-        } );
-        
+        $process->run( Closure::fromCallable([$this, 'sync']) );
         return Command::SUCCESS  ; 
         
-
+    }
+    
+    public function sync($type, $buffer ) {
+        // echo "\033[32m ====== ServerWeb Cli  $this->addressport ======>  \033[0m $buffer";
+        $this->io->writeln("<fire>".$this->addressport.":".$buffer."</>");
+        
     }
 }

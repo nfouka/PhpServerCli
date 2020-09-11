@@ -18,7 +18,8 @@ require __DIR__.'/../vendor/autoload.php';
 use Symfony\Component\Console\Application as BaseApplication;
 use Cli\Server ; 
 
-$application = new BaseApplication() ; 
-$application->add( new Server() );
+$application = new BaseApplication() ;
+
+$application->add( new Server("localhost:8000") );
 $application->run();
 
