@@ -32,11 +32,12 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
  */
 class Server extends Command
 {
-
-    
+ 
     protected static $defaultName = 'server:start';
     public $addressport ; 
     public $io  ; 
+    public $write ; 
+    public $logger  ; 
     
     public function __construct(string $addressport = null  )
     {
@@ -44,6 +45,11 @@ class Server extends Command
         parent::__construct();
     }
     
+    
+    public function getHelp()
+    {
+        return parent::getHelp()."CliServer " ; 
+    }
 
     /**
      * {@inheritdoc}
@@ -52,24 +58,33 @@ class Server extends Command
     {
         
         $this
-        ->setDescription('Example command requiring an argument to be passed')
+        ->setDescription('Run server with command line')
         
         
         ->addOption(
             'path',
             null,
-            InputOption::VALUE_REQUIRED,
-            'path of php ? default /usr/bin/php',
+            InputOption::VALUE_OPTIONAL,
+            'path of php installer default make /usr/bin/php',
             '/usr/bin/php'
             )  
         
         ->addOption(
             'addressport',
             null,
-            InputOption::VALUE_REQUIRED,
-            'hostport',
+            InputOption::VALUE_OPTIONAL,
+            'hostport --default = 127.0.0.1:8088',
             '127.0.0.1:8088'
             )
+            
+            ->addOption(
+                'logger',
+                null,
+                InputOption::VALUE_OPTIONAL ,
+                'path of logger file --default=serverCli.log ',
+                'serverCli.log'
+                )
+                
             
           ->addOption(
                 'rootdir',
@@ -92,8 +107,9 @@ class Server extends Command
  
         $outputStyle = new OutputFormatterStyle('black', 'green' );
         $output->getFormatter()->setStyle('fire', $outputStyle);
-        
+        $this->logger =  $input->getOption('logger')   ;  
         $this->io = $output ; 
+        $this->write = $output ; 
         $this->addressport  = $input->getOption('addressport')   ; 
         $io = new SymfonyStyle($input, $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
        
@@ -107,7 +123,15 @@ class Server extends Command
     
     public function sync($type, $buffer ) {
         // echo "\033[32m ====== ServerWeb Cli  $this->addressport ======>  \033[0m $buffer";
-        $this->io->writeln("<fire>".$this->addressport.":".$buffer."</>");
+
+        $file = 'server.log';
+        file_put_contents($file, $buffer , FILE_APPEND | LOCK_EX);
         
+            if ( preg_match("/404/i", $buffer ) == 1 ) {
+                $this->write->write("<fg=red>".$this->addressport.":".$buffer."</>");
+            }else{
+                $this->write->write("<info>--------  ".$this->addressport.":".$buffer."</info>");
+            }
+
     }
 }
