@@ -22,4 +22,4 @@ add command
 server:stop , server:restart ; server:run , server-run-fpm , server-lts , server-xdebug
 `
 
-md5 b5757eb0ae31b11dc0545b46e77abc46
+md5 6fb70ba593dcec2fd7c6d1bc98cafa6f
