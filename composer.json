@@ -1,8 +1,7 @@
 {
     "require": {
         "symfony/console": "^5.1",
-        "symfony/process": "^5.1",
-        "symfony/web-server-bundle": "^4.4"
+        "symfony/process": "^5.1"
     },
    "autoload": {
 	       "psr-4": {
