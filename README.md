@@ -15,5 +15,11 @@ chmod +x cliServer.phar
 
 # TO DO 
 
-check if port in user -> bascule to another port increment 
-add command server:stop , server:restart ; server:run , server-run-fpm , server-lts , server-xdebug
+Check if port in use ? -> bascule to another port increment 
+
+add command 
+`
+server:stop , server:restart ; server:run , server-run-fpm , server-lts , server-xdebug
+`
+
+md5 b5757eb0ae31b11dc0545b46e77abc46
