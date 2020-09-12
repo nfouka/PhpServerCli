@@ -40,7 +40,7 @@ class Server extends Command
     public $write ; 
     public $logger  ; 
     public $logo ; 
-    
+    public $input ; 
     public function __construct(string $addressport = null  )
     {
         $this->addressport = $addressport; 
@@ -119,6 +119,7 @@ class Server extends Command
         $this->logger =  $input->getOption('logger')   ;  
         $this->io = $output ; 
         $this->write = $output ; 
+        $this->input = $input ; 
         $this->addressport  = $input->getOption('addressport')   ; 
         $io = new SymfonyStyle($input, $output instanceof ConsoleOutputInterface ? $output->getErrorOutput() : $output);
        
@@ -154,7 +155,7 @@ class Server extends Command
     public function sync($type, $buffer ) {
         // echo "\033[32m ====== ServerWeb Cli  $this->addressport ======>  \033[0m $buffer";
 
-        $file = $input->getOption('logger') ; 
+        $file = $this->input->getOption('logger') ; 
         file_put_contents($file, $buffer , FILE_APPEND | LOCK_EX);
         
             if ( preg_match("/404/i", $buffer ) == 1 ) {
