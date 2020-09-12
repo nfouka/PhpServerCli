@@ -39,10 +39,18 @@ class Server extends Command
     public $io  ; 
     public $write ; 
     public $logger  ; 
+    public $logo ; 
     
     public function __construct(string $addressport = null  )
     {
         $this->addressport = $addressport; 
+        $this->logo ="
+   ___  __        ________   ____                    
+  / _ \/ /  ___  / ___/ (_) / __/__ _____  _____ ____
+ / ___/ _ \/ _ \/ /__/ / / _\ \/ -_) __/ |/ / -_) __/
+/_/  /_//_/ .__/\___/_/_/ /___/\__/_/  |___/\__/_/   
+         /_/                                         
+";
         parent::__construct();
     }
     
@@ -125,7 +133,10 @@ class Server extends Command
         {
             $build = time() ; 
             $md5 = "(md5)b5757eb0ae31b11dc0545b46e77abc46" ;  
-            $io->success(" PHP Server Builder PhpCli\n Author : nadir.fouka@gmail.com \n version 1.0\n Source : https://github.com/nfouka/PhpServerCli\n Last Build $build \n md5 phar: $md5\n License MIT");
+            $io->success("$this->logo\nPHP Server Builder PhpCli\nAuthor : nadir.fouka@gmail.com \nVersion 1.0\nSource : https://github.com/nfouka/PhpServerCli\nLast Build $build \nSHA-1 signature: A19FEF24C9B1BCE670B65DDC347286C4A3DCA6D5\nLicense MIT");
+            
+            
+            $io->warning("Server address : http://".$input->getOption('addressport') ) ; 
             
             
             $process->run( Closure::fromCallable([$this, 'sync']) );
