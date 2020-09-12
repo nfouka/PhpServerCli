@@ -1,4 +1,4 @@
-![Output sample](https://github.com/nfouka/datas/blob/master/server.gif)
+![Output sample](https://github.com/nfouka/datas/blob/master/server2.gif)
 
 # PhpServerCli
 Build your Php project with Php Cli
@@ -11,7 +11,7 @@ chmod +x cliServer.phar
 
 
 ``
-./cliServer.phar server:start  --addressport=192.168.1.90:8003 --rootdir=/home/nadir/Documents/framework/web
+./cliServer.phar server:start  --addressport=192.168.1.90:8003 --rootdir=~/framework/web
 ``
 
 
@@ -21,7 +21,8 @@ Check if port in use ? -> bascule to another port increment
 
 add command 
 `
-server:stop , server:restart ; server:run , server-run-fpm , server-lts , server-xdebug
+server:stop ,server:restart,server:run ,server-run-fpm ,server-lts
 `
 
-md5 6fb70ba593dcec2fd7c6d1bc98cafa6f
+
+SHA-1 signature: 9D0E79BACB135863A3BA3C193DF9A89D55EE4989
