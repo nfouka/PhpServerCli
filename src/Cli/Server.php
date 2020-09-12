@@ -90,8 +90,8 @@ class Server extends Command
                 'logger',
                 null,
                 InputOption::VALUE_OPTIONAL ,
-                'path of logger file --default=serverCli.log ',
-                'serverCli.log'
+                'path of logger file --default=server.log ',
+                'server.log'
                 )
                 
             
@@ -154,7 +154,7 @@ class Server extends Command
     public function sync($type, $buffer ) {
         // echo "\033[32m ====== ServerWeb Cli  $this->addressport ======>  \033[0m $buffer";
 
-        $file = 'server.log';
+        $file = $input->getOption('logger') ; 
         file_put_contents($file, $buffer , FILE_APPEND | LOCK_EX);
         
             if ( preg_match("/404/i", $buffer ) == 1 ) {
