@@ -24,6 +24,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Process\Process;
 use Closure;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\Table;
 
 /**
  * Runs a local web server in a background process.
@@ -115,9 +116,27 @@ class Server extends Command
        
         $process = new Process([$input->getOption('path') ,"-S", $input->getOption('addressport') ,"--docroot=".$input->getOption('rootdir') ]);
         $process->setTimeout(3600);   
-        $io->success("Server run on : ".$input->getOption('addressport') ) ; 
-        $process->run( Closure::fromCallable([$this, 'sync']) );
-        return Command::SUCCESS  ; 
+        
+        
+        
+        $connection = @fsockopen( explode(":" ,$input->getOption('addressport'))[0] , explode(":" ,$input->getOption('addressport'))[1] );
+        
+        if (!is_resource($connection))
+        {
+            $build = time() ; 
+            $md5 = "(md5)b5757eb0ae31b11dc0545b46e77abc46" ;  
+            $io->success(" PHP Server Builder PhpCli\n Author : nadir.fouka@gmail.com \n version 1.0\n Source : https://github.com/nfouka/PhpServerCli\n Last Build $build \n md5 phar: $md5\n License MIT");
+            
+            
+            $process->run( Closure::fromCallable([$this, 'sync']) );
+            return Command::SUCCESS  ; 
+        }
+        else
+        {
+            $io->error("Adresse or port in used , change port or kill process pid of port :".$input->getOption('addressport'))[1] ; 
+            return Command::FAILURE  ; 
+        }
+        
         
     }
     
@@ -130,7 +149,7 @@ class Server extends Command
             if ( preg_match("/404/i", $buffer ) == 1 ) {
                 $this->write->write("<fg=red>".$this->addressport.":".$buffer."</>");
             }else{
-                $this->write->write("<info>--------  ".$this->addressport.":".$buffer."</info>");
+                $this->write->write("<info>".$this->addressport.":".$buffer."</info>");
             }
 
     }
