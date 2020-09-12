@@ -1,5 +1,6 @@
 # PhpServerCli
 Build your Php project with Php Cli
+![Output sample](https://github.com/nfouka/datas/blob/master/Capture%20vid%C3%A9o%202020-09-12%2016%2028%2028.gif)
 
 # TO USE 
 
