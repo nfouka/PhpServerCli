@@ -1,4 +1,26 @@
 {
+    "name": "nfouka/cliserver",
+    "type": "library",
+    "description": "Build server with PHP Cli.",
+    "keywords": [
+        "package",
+        "dependency",
+        "autoload"
+    ],
+    "homepage": "https://getcliServer.org/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nadir Fouka",
+            "email": "nadir.fouka@gmail.com",
+            "homepage": "http://fouka.ovh"
+        },
+        {
+            "name": "Jordi Boggiano",
+            "email": "j.boggiano@seld.be",
+            "homepage": "https://seld.be"
+        }
+    ],
     "require": {
         "symfony/console": "^5.1",
         "symfony/process": "^5.1"
