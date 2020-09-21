@@ -23,7 +23,8 @@
     ],
     "require": {
         "symfony/console": "^5.1",
-        "symfony/process": "^5.1"
+        "symfony/process": "^5.1",
+	"composer/installers": "*"
     },
    "autoload": {
 	       "psr-4": {
