@@ -1,7 +1,7 @@
 ![Output sample](https://github.com/nfouka/datas/blob/master/server2.gif)
 
 # PhpServerCli
-Build your Php project with Php Cli
+Built-in web server php
 
 # TO USE 
 
